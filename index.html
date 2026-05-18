@@ -1,0 +1,247 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mapa do Escritório</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">ME</div>
+        <div>
+          <h1>Mapa do Escritório</h1>
+        
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Seções">
+        <button class="nav-item active" data-view="dashboard">Painel</button>
+        <button class="nav-item" data-view="people">Funcionários</button>
+        <button class="nav-item" data-view="emails">E-mails</button>
+        <button class="nav-item" data-view="sheets">Planilhas</button>
+        <button class="nav-item" data-view="notebooks">Notebooks</button>
+        <button class="nav-item" data-view="phones">Celulares</button>
+        <button class="nav-item" data-view="offices">Office Family</button>
+        <button class="nav-item" data-view="wifis">Redes Wi-Fi</button>
+        <button class="nav-item" data-view="items">Itens</button>
+        <button class="nav-item" data-view="map">Mapa</button>
+      </nav>
+
+      <div class="storage-panel">
+        <button id="exportJson" class="secondary-btn">Exportar backup</button>
+        <label class="secondary-btn file-btn">
+          Importar backup
+          <input id="importJson" type="file" accept="application/json" />
+        </label>
+      </div>
+    </aside>
+
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Sistema interno</p>
+          <h2 id="viewTitle">Painel</h2>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-wrap">
+            <span aria-hidden="true">⌕</span>
+            <input id="globalSearch" type="search" placeholder="Buscar no escritório" />
+          </div>
+          <button id="openEntryModal" class="primary-btn">Novo registro</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active-view">
+        <div class="metric-grid">
+          <div class="metric"><span id="peopleCount">0</span><p>Funcionários</p></div>
+          <div class="metric"><span id="notebookCount">0</span><p>Notebooks</p></div>
+          <div class="metric"><span id="phoneCount">0</span><p>Celulares</p></div>
+          <div class="metric"><span id="officeCount">0</span><p>Office Family</p></div>
+          <div class="metric"><span id="wifiCount">0</span><p>Redes Wi-Fi</p></div>
+          <div class="metric"><span id="emailCount">0</span><p>E-mails</p></div>
+          <div class="metric"><span id="sheetCount">0</span><p>Planilhas</p></div>
+          <div class="metric"><span id="itemCount">0</span><p>Itens</p></div>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-header">
+              <h3>Registros recentes</h3>
+            </div>
+            <div id="recentList" class="record-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h3>Responsáveis com mais vínculos</h3>
+            </div>
+            <div id="ownerList" class="record-list compact"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="people" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Funcionários</h3>
+            <p>Equipe, função, setor, username e contatos.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="person">Adicionar funcionário</button>
+        </div>
+        <div id="peopleList" class="cards-grid"></div>
+      </section>
+
+      <section id="emails" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>E-mails</h3>
+            <p>Contas, aliases, caixas compartilhadas e responsáveis.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="email">Adicionar e-mail</button>
+        </div>
+        <div id="emailsList" class="cards-grid"></div>
+      </section>
+
+      <section id="sheets" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Planilhas</h3>
+            <p>Finalidade, área, estados atendidos e dono operacional.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="sheet">Adicionar planilha</button>
+        </div>
+        <div id="sheetsList" class="cards-grid"></div>
+      </section>
+
+      <section id="notebooks" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Mapeamento de notebooks</h3>
+            <p>Equipamento, patrimônio, serial, status e username obrigatório.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="notebook">Adicionar notebook</button>
+        </div>
+        <div id="notebooksList" class="cards-grid"></div>
+      </section>
+
+      <section id="phones" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Mapeamento de celulares</h3>
+            <p>Aparelhos principais por estado ou clones vinculados a funcionários.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="phone">Adicionar celular</button>
+        </div>
+        <div id="phonesList" class="cards-grid"></div>
+      </section>
+
+      <section id="offices" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Pacotes Office Family</h3>
+            <p>Proprietário, usuários, final do cartão e proprietário do cartão.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="office">Adicionar Office Family</button>
+        </div>
+        <div id="officesList" class="cards-grid"></div>
+      </section>
+
+      <section id="wifis" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Redes Wi-Fi</h3>
+            <p>SSID, senha, tipo de rede e local.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="wifi">Adicionar rede Wi-Fi</button>
+        </div>
+        <div id="wifisList" class="cards-grid"></div>
+      </section>
+
+      <section id="items" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Itens gerais</h3>
+            <p>Equipamentos, acessos, documentos, chaves e ativos sem vínculo obrigatório com funcionário.</p>
+          </div>
+          <button class="secondary-btn quick-add" data-type="item">Adicionar item</button>
+        </div>
+        <div id="itemsList" class="cards-grid"></div>
+      </section>
+
+      <section id="map" class="view">
+        <div class="section-toolbar">
+          <div>
+            <h3>Mapa de vínculos</h3>
+            <p>Veja os recursos ligados a cada funcionário e gere relatórios.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button id="exportCsv" class="secondary-btn">Exportar CSV</button>
+            <button id="exportExcel" class="secondary-btn">Exportar Excel</button>
+            <button id="exportPdf" class="secondary-btn">Relatório PDF</button>
+          </div>
+        </div>
+        <div id="relationshipMap" class="map-board"></div>
+      </section>
+    </main>
+
+    <dialog id="entryModal" class="modal">
+      <form id="entryForm" method="dialog">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Cadastro</p>
+            <h3 id="modalTitle">Novo registro</h3>
+          </div>
+          <button id="closeEntryModal" type="button" class="icon-btn" aria-label="Fechar">×</button>
+        </div>
+
+        <input id="recordId" type="hidden" />
+        <div class="form-grid">
+          <label>
+            Tipo
+            <select id="recordType">
+              <option value="person">Funcionário</option>
+              <option value="email">E-mail</option>
+              <option value="sheet">Planilha</option>
+              <option value="notebook">Notebook</option>
+              <option value="phone">Celular</option>
+              <option value="office">Office Family</option>
+              <option value="wifi">Rede Wi-Fi</option>
+              <option value="item">Item geral</option>
+            </select>
+          </label>
+          <label>
+            Nome
+            <input id="recordName" />
+          </label>
+          <label data-common="department">
+            Setor
+            <input id="recordDepartment" />
+          </label>
+          <label data-common="owner">
+            Funcionário vinculado / responsável
+            <select id="recordOwner"></select>
+          </label>
+          <div id="dynamicFields" class="dynamic-fields wide"></div>
+          <label class="wide">
+            Tags
+            <input id="recordTags" placeholder="Ex.: fiscal, acesso, mensal" />
+          </label>
+          <label class="wide">
+            Observações
+            <textarea id="recordNotes" rows="4" placeholder="Detalhes importantes, acessos, localização, frequência, senha guardada onde, etc."></textarea>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button id="deleteRecord" type="button" class="danger-btn hidden">Excluir</button>
+          <span></span>
+          <button id="cancelEntryModal" type="button" class="secondary-btn">Cancelar</button>
+          <button class="primary-btn" type="submit">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
